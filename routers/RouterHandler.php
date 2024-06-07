@@ -20,31 +20,40 @@ class RouterHandler
         $resources = new $controller();
         switch ($this->method) {
             case "GET": {
-                    if ($id && $id == "create") {
-                        $resources->create();
-                    } else if ($id && $id == "delete") {
-                        $resources->delete();
-                    } else if ( $id && $id == "edit") {
-                        $resources->edit();
-                    } else if ($id) {
-                        $resources->show($id);
-                    } else {
-                        $resources->index();
-                    }
-                    break;
+                if ($id && $id == "login") {
+                    $resources->login();
+                } else if ($id && $id == "create") {
+                    $resources->create();
+                } else if ($id && $id == "delete") {
+                    $resources->delete();
+                } else if ( $id && $id == "edit") {
+                    $resources->edit();
+                } else if ($id) {
+                    $resources->show($id);
+                } else {
+                    $resources->index();
                 }
+                break;
+            }
             case "POST": {
+                if ($id && $id == "login") {
+                    $resources->loginProcess();
+                } else if ($id && $id == "logout") {
+                    $resources->logout();
+                } else {
                     $resources->store($this->data);
-                    break;
                 }
+                break;
+            }
             case "DELETE": {
-                    $resources->destroy($this->data);
-                    break;
-                }
+                $resources->destroy($this->data);
+                break;
+            }
             case "PUT": {
-                    $resources->update($this->data);
-                    break;
-                }
+                $resources->update($this->data);
+                break;
+            }
         }
     }
 }
+

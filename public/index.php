@@ -1,9 +1,10 @@
 <?php
 /*Front controller:  punto de contacto inicial para recoger las peticiones. 
-Delegará en un ApplicationController para manejar la acción y la vista asociad */
+Delegará en un ApplicationController para manejar la acción y la vista asociada */
 
 require_once("../app/controllers/IngresosController.php");
 require_once("../app/controllers/RetirosController.php");
+require_once("../app/controllers/AuthController.php");
 require_once("../app/enums/MetodoPagoEnum.php");
 require_once("../app/enums/IngresoTipoEnum.php");
 require_once("../app/enums/RetiroTipoEnum.php");
@@ -25,6 +26,15 @@ switch ($resource) {
     case '/':
         require_once("../app/views/inicio.php");
         break;
+    case 'login':
+        $router->setMethod('GET');
+        $router->setData($_POST);
+        $router->route(AuthController::class, 'login');
+        break;
+    case 'logout':
+        $router->setMethod('GET');
+        $router->route(AuthController::class, 'logout');
+        break;
     case 'ingresos': {
         $method = $_POST['_method'] ?? 'GET';
         $router->setMethod($method);
@@ -43,5 +53,4 @@ switch ($resource) {
         require_once("../app/exceptions/404.php");
         break;
 }
-
 ?>
