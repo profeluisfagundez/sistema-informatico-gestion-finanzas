@@ -19,3 +19,11 @@ CREATE TABLE IF NOT EXISTS `ingresos` (
   `descripcion` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS `usuarios` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre_usuario` varchar(50) NOT NULL,
+  `contrasena` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `nombre_usuario` (`nombre_usuario`)
+) ENGINE=InnoDB;
