@@ -16,7 +16,7 @@ class AuthController
 
     public function loginProcess()
     {
-        session_start();
+        session_start(); // Inicia la sesión al principio del método
         $username = $_POST['username'];
         $password = $_POST['password'];
 
@@ -24,7 +24,8 @@ class AuthController
 
         if ($user && password_verify($password, $user['contrasena'])) {
             $_SESSION['user'] = $user;
-            header("Location: /inicio");
+            require_once '../app/views/inicio.php';
+            exit(); // Finaliza el script después de enviar la redirección
         } else {
             $error = "Nombre de usuario o contraseña incorrectos.";
             require_once '../app/views/login.php';
@@ -33,10 +34,14 @@ class AuthController
 
     public function logout()
     {
-        session_start();
+        session_start(); // Inicia la sesión al principio del método
         session_destroy();
-        header("Location: /login");
+        require_once '../app/views/login.php';
+        exit(); // Finaliza el script después de enviar la redirección
     }
 }
+
+?>
+
 
 

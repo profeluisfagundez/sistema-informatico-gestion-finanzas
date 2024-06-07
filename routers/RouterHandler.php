@@ -17,16 +17,20 @@ class RouterHandler
 
     public function route($controller, $id)
     {
+        // Verificar si el usuario ha iniciado sesión antes de permitir el acceso a las rutas protegidas
+        if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+            header("Location: /login.php");
+            exit;
+        }
+
         $resources = new $controller();
         switch ($this->method) {
-            case "GET": {
-                if ($id && $id == "login") {
-                    $resources->login();
-                } else if ($id && $id == "create") {
+            case "GET":
+                if ($id && $id == "create") {
                     $resources->create();
                 } else if ($id && $id == "delete") {
                     $resources->delete();
-                } else if ( $id && $id == "edit") {
+                } else if ($id && $id == "edit") {
                     $resources->edit();
                 } else if ($id) {
                     $resources->show($id);
@@ -34,26 +38,18 @@ class RouterHandler
                     $resources->index();
                 }
                 break;
-            }
-            case "POST": {
-                if ($id && $id == "login") {
-                    $resources->loginProcess();
-                } else if ($id && $id == "logout") {
-                    $resources->logout();
-                } else {
-                    $resources->store($this->data);
-                }
+            case "POST":
+                $resources->store($this->data);
                 break;
-            }
-            case "DELETE": {
+            case "DELETE":
                 $resources->destroy($this->data);
                 break;
-            }
-            case "PUT": {
+            case "PUT":
                 $resources->update($this->data);
                 break;
-            }
         }
     }
 }
+?>
+
 
