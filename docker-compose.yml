@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: mi-aplicacion
+    container_name: finanzasApp
     ports:
       - "3500:80"
     depends_on:
@@ -13,14 +13,14 @@ services:
 
   database:
     image: mariadb
-    container_name: mi-base-de-datos
+    container_name: finanzasBD
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: finanzas
-      MYSQL_USER: finanzas_user
-      MYSQL_PASSWORD: finanzas_user_password
+      MYSQL_USER: finanzas
+      MYSQL_PASSWORD: finanzas
     ports:
-      - "3306:3306"
+      - "33060:3306"
     volumes:
       - db-volume:/var/lib/mysql
       - ./others/bd.sql:/docker-entrypoint-initdb.d/bd.sql
